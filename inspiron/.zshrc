@@ -1,5 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+if [[ -z "$TMUX" ]]; then tmux; fi
+test -r "~/.dir_colors" && eval $(dircolors ~/.dir_colors)
 
 # Path to your oh-my-zsh installation.
 export ZSH="/home/tbptbp/.oh-my-zsh"
@@ -8,41 +10,7 @@ export ZSH="/home/tbptbp/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="bira"
-
-# The following set the prompt
-# ZSH Theme - Preview: https://gyazo.com/8becc8a7ed5ab54a0262a470555c3eed.png
-return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
-
-if [[ $UID -eq 0 ]]; then
-   user_host='%{$terminfo[bold]$fg[red]%}%n@%m %{$reset_color%}'
-   user_symbol='#'
-else
-   user_host='%{$terminfo[bold]$fg[green]%}%n@%m %{$reset_color%}'
-   user_symbol='$'
-fi
-
-current_dir='%{$terminfo[bold]$fg[blue]%}%~ %{$reset_color%}'
-git_branch='$(git_prompt_info)'
-rvm_ruby='$(ruby_prompt_info)'
-venv_prompt='$(virtualenv_prompt_info)'
-
-ZSH_THEME_RVM_PROMPT_OPTIONS="i v g"
-
-PROMPT="╭─${user_host}${current_dir}${rvm_ruby}${git_branch}${venv_prompt}
-╰─%B${user_symbol}%b "
-RPROMPT="%B${return_code}%b"
-
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[yellow]%}‹"
-ZSH_THEME_GIT_PROMPT_SUFFIX="› %{$reset_color%}"
-
-ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[red]%}‹"
-ZSH_THEME_RUBY_PROMPT_SUFFIX="› %{$reset_color%}"
-
-ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX="%{$fg[green]%}‹"
-ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="› %{$reset_color%}"
-ZSH_THEME_VIRTUALENV_PREFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX
-ZSH_THEME_VIRTUALENV_SUFFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
+# ZSH_THEME="bira"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -102,7 +70,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history)
+plugins=(git history battery)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -119,28 +87,77 @@ export EDITOR='vim'
 # Compilation flags
 export ARCHFLAGS="-arch x86_64"
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-alias icl='cd ~/Desktop/Workspace/ICL/'
-alias vncserver-start='sudo systemctl start vncserver-x11-serviced.service'
-alias vncserver-enable='sudo systemctl enable vncserver-x11-serviced.service'
-alias vncserver-stop='sudo systemctl stop vncserver-x11-serviced.service'
-alias vncserver-disable='sudo systemctl disable vncserver-x11-serviced.service'
-
 
 export TOOLDIR=$HOME/c-tools
 export PATH="$TOOLDIR/bin:$TOLLDIR/bin/$ARCH:$PATH"
 export MANPATH=${MANPATH}:$TOLLDIR/man
-
-alias source-aai='source ~/env/aai/dev/bin/activate'
-alias cd-aai='cd /home/tbptbp/Desktop/Workspace/AAI/'
-alias watchdog='cd ~/Desktop/Workspace/AAI/watchdog; source env/bin/activate'
-alias bloomberg='cd ~/Desktop/Workspace/AAI/nessie; source bbg/bin/activate'
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/tbptbp/google-cloud-sdk/path.zsh.inc' ]; then . '/home/tbptbp/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/home/tbptbp/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/tbptbp/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+
+# The following set the prompt
+# ZSH Theme - Preview: https://gyazo.com/8becc8a7ed5ab54a0262a470555c3eed.png
+return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
+
+if [[ $UID -eq 0 ]]; then
+   user_host='%{$terminfo[bold]$fg[red]%}%n@%m %{$reset_color%}'
+   user_symbol='#'
+elif [[ -n "$USER_SYMBOL" ]]; then
+   user_host='%{$terminfo[bold]$fg[green]%}%n@%m %{$reset_color%}'
+   user_symbol="$USER_SYMBOL"
+else
+   user_host='%{$terminfo[bold]$fg[green]%}%n@%m %{$reset_color%}'
+   user_symbol='λ'
+fi
+
+current_dir='%{$terminfo[bold]%F{24}%}%~%{$reset_color%}'
+git_branch='$(git_prompt_info)'
+rvm_ruby='$(ruby_prompt_info)'
+time="%{$fg[cyan]%*%}"
+[[ -n $VIRTUAL_ENV ]] && venv_prompt=$(basename $VIRTUAL_ENV) || venv_prompt="default"
+venv_prompt=%F{82}$venv_prompt%f 
+
+ZSH_THEME_RVM_PROMPT_OPTIONS="i v g"
+VIRTUAL_ENV_DISABLE_PROMPT=1
+
+if [[ $(battery_pct_prompt) > 20 ]]; then
+  battery_pct="%{$fg[green]$(battery_pct_prompt)%}%{$reset_color%}"
+else 
+  battery_pct="%{$fg[red]$(battery_pct_prompt)%}%{$reset_color%}"
+fi
+
+PROMPT="%F{240}╭─[%f${current_dir}%F{240}]——[%f${rvm_ruby}${git_branch}%F{240}]—-[%f${venv_prompt}%F{240}]——[%f$time%F{240}]——[%f$battery_pct%F{240}]%f
+%F{240}╰─→ %f%B%F{50}${user_symbol}%f%b "
+RPROMPT="%B${return_code}%b"
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%F{72}\uE0A0"
+ZSH_THEME_GIT_PROMPT_SUFFIX="%f%{$reset_color%}"
+
+ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[red]%}‹"
+ZSH_THEME_RUBY_PROMPT_SUFFIX="›%{$reset_color%}"
+
+ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX="%{$fg[green]%}‹"
+ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="›%{$reset_color%}"
+ZSH_THEME_VIRTUALENV_PREFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX
+ZSH_THEME_VIRTUALENV_SUFFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
+
+# Set personal aliases here
+alias icl='cd ~/Desktop/Workspace/ICL/'
+alias vncserver-start='sudo systemctl start vncserver-x11-serviced.service'
+alias vncserver-enable='sudo systemctl enable vncserver-x11-serviced.service'
+alias vncserver-stop='sudo systemctl stop vncserver-x11-serviced.service'
+alias vncserver-disable='sudo systemctl disable vncserver-x11-serviced.service'
+
+alias source-aai='source ~/env/aai/dev/bin/activate'
+alias cd-aai='cd /home/tbptbp/Desktop/Workspace/AAI/'
+alias watchdog='cd ~/Desktop/Workspace/AAI/watchdog; source env/bin/activate'
+alias bloomberg='cd ~/Desktop/Workspace/AAI/nessie; source bbg/bin/activate'
+

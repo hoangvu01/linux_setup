@@ -34,4 +34,5 @@ colorscheme nord
 set expandtab ts=2 sw=2 ai
 set number
 set encoding=utf-8
-
+set autoindent
+filetype indent on
