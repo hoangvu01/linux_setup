@@ -122,9 +122,12 @@ fi
 current_dir='%{$terminfo[bold]%F{24}%}%~%{$reset_color%}'
 git_branch='$(git_prompt_info)'
 rvm_ruby='$(ruby_prompt_info)'
-[[ $(date +"%H") -gt "5" ]] && [[ $(date +"%H") -le "17" ]] && time="%{$fg[cyan]☼ %*%}" || time="%{$fg[cyan]☽ %*%}"
-venv_prompt='%F{82}ᘐ $(virtualenv_prompt_info | cut -d "[" -f2 | cut -d "]" -f1)%f'
 battery_pct='$(battery_pct_prompt)'
+
+[[ $(date +"%H") -gt "5" ]] && [[ $(date +"%H") -le "17" ]] && time="%{$fg[cyan]☼ %*%}" || time="%{$fg[cyan]☽ %*%}"
+
+venv_prompt='$(virtualenv_prompt_info | cut -d "[" -f2 | cut -d "]" -f1)'
+[[ $venv_prompt ]] && venv_prompt='%F{82}ᘐ default%f' || venv_prompt="%F{82}ᘐ ${venv_prompt}%f"
 
 ZSH_THEME_RVM_PROMPT_OPTIONS="i v g"
 
