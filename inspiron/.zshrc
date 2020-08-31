@@ -70,9 +70,10 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git history battery)
+plugins=(git history battery virtualenv)
 
 source $ZSH/oh-my-zsh.sh
+export VIRTUAL_ENV_DISABLE_PROMPT=0
 
 # User configuration
 
@@ -121,31 +122,27 @@ fi
 current_dir='%{$terminfo[bold]%F{24}%}%~%{$reset_color%}'
 git_branch='$(git_prompt_info)'
 rvm_ruby='$(ruby_prompt_info)'
-time="%{$fg[cyan]%*%}"
-[[ -n $VIRTUAL_ENV ]] && venv_prompt=$(basename $VIRTUAL_ENV) || venv_prompt="default"
-venv_prompt=%F{82}$venv_prompt%f 
+[[ $(date +"%H") -gt "5" ]] && [[ $(date +"%H") -le "17" ]] && time="%{$fg[cyan]☼ %*%}" || time="%{$fg[cyan]☽ %*%}"
+venv_prompt='%F{82}ᘐ $(virtualenv_prompt_info | cut -d "[" -f2 | cut -d "]" -f1)%f'
+battery_pct='$(battery_pct_prompt)'
 
 ZSH_THEME_RVM_PROMPT_OPTIONS="i v g"
-VIRTUAL_ENV_DISABLE_PROMPT=1
 
-if [[ $(battery_pct_prompt) > 20 ]]; then
-  battery_pct="%{$fg[green]$(battery_pct_prompt)%}%{$reset_color%}"
-else 
-  battery_pct="%{$fg[red]$(battery_pct_prompt)%}%{$reset_color%}"
-fi
+OB="%F{240}—[%f"
+CB="%F{240}]—%f"
 
-PROMPT="%F{240}╭─[%f${current_dir}%F{240}]——[%f${rvm_ruby}${git_branch}%F{240}]—-[%f${venv_prompt}%F{240}]——[%f$time%F{240}]——[%f$battery_pct%F{240}]%f
+PROMPT="%F{240}╭─[%f${current_dir}$CB$OB${rvm_ruby}${git_branch}${CB}${OB}${venv_prompt}$CB$OB${time}$CB$OB${battery_pct}%F{240}]%f
 %F{240}╰─→ %f%B%F{50}${user_symbol}%f%b "
 RPROMPT="%B${return_code}%b"
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%F{72}\uE0A0"
+ZSH_THEME_GIT_PROMPT_PREFIX="%F{72}\uE0A0 "
 ZSH_THEME_GIT_PROMPT_SUFFIX="%f%{$reset_color%}"
 
 ZSH_THEME_RUBY_PROMPT_PREFIX="%{$fg[red]%}‹"
 ZSH_THEME_RUBY_PROMPT_SUFFIX="›%{$reset_color%}"
 
-ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX="%{$fg[green]%}‹"
-ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX="›%{$reset_color%}"
+ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX=""
+ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX=""
 ZSH_THEME_VIRTUALENV_PREFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_PREFIX
 ZSH_THEME_VIRTUALENV_SUFFIX=$ZSH_THEME_VIRTUAL_ENV_PROMPT_SUFFIX
 
