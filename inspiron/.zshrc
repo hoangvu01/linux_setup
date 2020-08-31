@@ -123,18 +123,17 @@ current_dir='%{$terminfo[bold]%F{24}%}%~%{$reset_color%}'
 git_branch='$(git_prompt_info)'
 rvm_ruby='$(ruby_prompt_info)'
 battery_pct='$(battery_pct_prompt)'
+venv_prompt='$(virtualenv_prompt_info | cut -d "[" -f2 | cut -d "]" -f1)'
+venv_prompt="%F{82}${venv_prompt}ᘐ%f"
 
 [[ $(date +"%H") -gt "5" ]] && [[ $(date +"%H") -le "17" ]] && time="%{$fg[cyan]☼ %*%}" || time="%{$fg[cyan]☽ %*%}"
-
-venv_prompt='$(virtualenv_prompt_info | cut -d "[" -f2 | cut -d "]" -f1)'
-[[ $venv_prompt ]] && venv_prompt='%F{82}ᘐ default%f' || venv_prompt="%F{82}ᘐ ${venv_prompt}%f"
 
 ZSH_THEME_RVM_PROMPT_OPTIONS="i v g"
 
 OB="%F{240}—[%f"
 CB="%F{240}]—%f"
 
-PROMPT="%F{240}╭─[%f${current_dir}$CB$OB${rvm_ruby}${git_branch}${CB}${OB}${venv_prompt}$CB$OB${time}$CB$OB${battery_pct}%F{240}]%f
+PROMPT="%F{240}╭─%f\`if [ \$? = 0 ]; then echo '%F{154}(^.^)%f'; else echo '%F{196}{o_o}%f'; fi\`%F{240}[%f${current_dir}$CB$OB${rvm_ruby}${git_branch}${CB}${OB}${venv_prompt}$CB$OB${time}$CB$OB${battery_pct}%F{240}]%f
 %F{240}╰─→ %f%B%F{50}${user_symbol}%f%b "
 RPROMPT="%B${return_code}%b"
 
