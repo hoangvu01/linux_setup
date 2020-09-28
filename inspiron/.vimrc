@@ -1,7 +1,6 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -17,8 +16,8 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'junegunn/fzf', { 'do' : { -> fzf#install() } }
 Plugin 'leafgarland/typescript-vim'
+Plugin 'airblad/vim-gitgutter'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -86,4 +85,4 @@ set autoindent
 
 let g:airline_theme='minimalist'
 filetype indent on
-filetype indent on
+filetype plugin on
