@@ -17,7 +17,7 @@ ZSH_THEME="random"
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
 # If set to an empty array, this variable will have no effect.
-ZSH_THEME_RANDOM_CANDIDATES=( "custom1" "robbyrussell" "spaceship" )
+# ZSH_THEME_RANDOM_CANDIDATES=( "custom1" "robbyrussell" "spaceship" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -71,7 +71,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions zsh-syntax-highlighting git history battery virtualenv)
+plugins=(zsh-autosuggestions zsh-syntax-highlighting themes git history battery virtualenv)
 
 source $ZSH/oh-my-zsh.sh
 export VIRTUAL_ENV_DISABLE_PROMPT=0
@@ -105,20 +105,7 @@ if [ -f '/home/tbptbp/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/tbpt
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
 
-# Set personal aliases here
-alias icl='cd ~/Desktop/Workspace/ICL/'
-alias vncserver-start='sudo systemctl start vncserver-x11-serviced.service'
-alias vncserver-enable='sudo systemctl enable vncserver-x11-serviced.service'
-alias vncserver-stop='sudo systemctl stop vncserver-x11-serviced.service'
-alias vncserver-disable='sudo systemctl disable vncserver-x11-serviced.service'
-
-alias gcurl='curl -H "Authorization: Bearer $(print-identity-token)"'
-
-alias source-aai='source ~/env/aai/dev/bin/activate'
-alias cd-aai='cd /home/tbptbp/Desktop/Workspace/AAI/'
-alias watchdog='cd ~/Desktop/Workspace/AAI/watchdog; source env/bin/activate'
-alias bloomberg='cd ~/Desktop/Workspace/AAI/nessie; source bbg/bin/activate'
-
-
+source ~/.bash_aliases
 source <(kubectl completion zsh)
+eval $(thefuck --alias)
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

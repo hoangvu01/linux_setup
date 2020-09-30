@@ -1,6 +1,5 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -82,6 +81,7 @@ set expandtab ts=2 sw=2 ai
 set number
 set encoding=utf-8
 set autoindent
+set clipboard=unnamedplus
 
 let g:airline_theme='minimalist'
 filetype indent on

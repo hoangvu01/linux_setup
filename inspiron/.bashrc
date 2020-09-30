@@ -117,22 +117,9 @@ if ! shopt -oq posix; then
 fi
 
 
-#user alias
-alias icl='cd ~/Desktop/Workspace/ICL/'
-alias vncserver-start='sudo systemctl start vncserver-x11-serviced.service'
-alias vncserver-enable='sudo systemctl enable vncserver-x11-serviced.service'
-alias vncserver-stop='sudo systemctl stop vncserver-x11-serviced.service'
-alias vncserver-disable='sudo systemctl disable vncserver-x11-serviced.service'
-
-
 export TOOLDIR=$HOME/c-tools
 export PATH="$TOOLDIR/bin:$TOLLDIR/bin/$ARCH:$PATH"
 export MANPATH=${MANPATH}:$TOLLDIR/man
-
-alias source-aai='source ~/env/aai/dev/bin/activate'
-alias cd-aai='cd /home/tbptbp/Desktop/Workspace/AAI/'
-alias watchdog='cd ~/Desktop/Workspace/AAI/watchdog; source env/bin/activate'
-alias bloomberg='cd ~/Desktop/Workspace/AAI/nessie; source bbg/bin/activate'
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/home/tbptbp/google-cloud-sdk/path.bash.inc' ]; then . '/home/tbptbp/google-cloud-sdk/path.bash.inc'; fi
@@ -142,4 +129,5 @@ if [ -f '/home/tbptbp/google-cloud-sdk/completion.bash.inc' ]; then . '/home/tbp
 
 complete -C /usr/bin/terraform terraform
 
+eval $(thefuck --alias)
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
