@@ -1,0 +1,14 @@
+alias pc='ssh tbptbp@tbp-pc'
+
+alias icl='cd ~/Desktop/Workspace/ICL/'
+alias vncserver-start='sudo systemctl start vncserver-x11-serviced.service'
+alias vncserver-enable='sudo systemctl enable vncserver-x11-serviced.service'
+alias vncserver-stop='sudo systemctl stop vncserver-x11-serviced.service'
+alias vncserver-disable='sudo systemctl disable vncserver-x11-serviced.service'
+
+alias source-aai='source ~/env/aai/dev/bin/activate'
+alias cd-aai='cd /home/tbptbp/Desktop/Workspace/AAI/'
+alias watchdog='cd ~/Desktop/Workspace/AAI/watchdog; source env/bin/activate'
+alias bloomberg='cd ~/Desktop/Workspace/AAI/nessie; source bbg/bin/activate'
+
+alias gcurl='curl -H "Authorization: Bearer $(print-identity-token)"'
