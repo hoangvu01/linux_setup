@@ -42,4 +42,3 @@ set autoindent
 let g:airline_theme='luna'
 set nocompatible              " be iMproved, required
 filetype off                  " required
-filetype plugin on
